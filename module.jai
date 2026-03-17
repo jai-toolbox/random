@@ -49,6 +49,98 @@ random_get_within_unit_cube :: (state: *Random_State) -> Vector3 {
     };
 }
 
+/*
+Returns a random point inside the unit cube [-1,1]^3, but rejected if
+its length falls outside the range [min_len, max_len].
+*/
+random_get_within_unit_cube_length_constrained :: (min_len: float = 0.01, max_len: float = 1.0) -> Vector3 {
+    min_len_sq := min_len * min_len;
+    max_len_sq := max_len * max_len;
+
+    while true {
+        v := random_get_within_unit_cube();
+
+        len_sq := length_squared(v);
+
+        if len_sq < min_len_sq || len_sq > max_len_sq continue;
+
+        return v;
+    }
+
+    return .{0.5, 0.5, 0.5};
+}
+
+random_get_within_unit_cube_length_constrained :: (state: *Random_State, min_len: float = 0.01, max_len: float = 1.0) -> Vector3 {
+    min_len_sq := min_len * min_len;
+    max_len_sq := max_len * max_len;
+
+    while true {
+        v := random_get_within_unit_cube(state);
+
+        len_sq := length_squared(v);
+
+        if len_sq < min_len_sq || len_sq > max_len_sq continue;
+
+        return v;
+    }
+
+    return .{0.5, 0.5, 0.5};
+}
+
+/*
+Returns a random point inside the positive unit cube [0,1]^3, but rejected if
+its length falls outside the range [min_len, max_len].
+*/
+random_get_within_positive_unit_cube :: () -> Vector3 {
+    return .{
+        random_get_zero_to_one(),
+        random_get_zero_to_one(),
+        random_get_zero_to_one()
+    };
+}
+
+random_get_within_positive_unit_cube :: (state: *Random_State) -> Vector3 {
+    return .{
+        random_get_zero_to_one(state),
+        random_get_zero_to_one(state),
+        random_get_zero_to_one(state)
+    };
+}
+
+random_get_within_positive_unit_cube_length_constrained :: (min_len: float = 0.01, max_len: float = 1.0) -> Vector3 {
+    min_len_sq := min_len * min_len;
+    max_len_sq := max_len * max_len;
+
+    while true {
+        v := random_get_within_positive_unit_cube();
+
+        len_sq := length_squared(v);
+
+        if len_sq < min_len_sq || len_sq > max_len_sq continue;
+
+        return v;
+    }
+
+    return .{0.5, 0.5, 0.5};
+}
+
+random_get_within_positive_unit_cube_length_constrained :: (state: *Random_State, min_len: float = 0.01, max_len: float = 1.0) -> Vector3 {
+    min_len_sq := min_len * min_len;
+    max_len_sq := max_len * max_len;
+
+    while true {
+        v := random_get_within_positive_unit_cube(state);
+
+        len_sq := length_squared(v);
+
+        if len_sq < min_len_sq || len_sq > max_len_sq continue;
+
+        return v;
+    }
+
+    return .{0.5, 0.5, 0.5};
+}
+
 
 /*
 We want a uniformly distributed random direction on the unit sphere.
