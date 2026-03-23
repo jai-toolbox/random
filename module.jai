@@ -165,10 +165,10 @@ random_unit_vector :: () -> Vector3 {
 
         len_sq := length_squared(v);
 
-        // Outside the unit sphere — reject to avoid corner bias
+        // as mentioned, we do this to reject corner bias
         if len_sq > 1.0 continue;
 
-        // Too close to the origin — reject to avoid numerical instability
+        // reject to avoid numerical instability
         if len_sq < 0.0001 continue;
 
         return unit_vector(v);
